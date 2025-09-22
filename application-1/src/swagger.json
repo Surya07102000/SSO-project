@@ -1,0 +1,102 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Application-1 Product API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3001" }
+  ],
+  "paths": {
+    "/api/v1/product": {
+      "get": {
+        "summary": "List products",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "summary": "Create product",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductCreate"
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Created" }, "409": { "description": "Conflict" } }
+      }
+    },
+    "/api/v1/product/{id}": {
+      "get": {
+        "summary": "Get product by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not Found" } }
+      },
+      "patch": {
+        "summary": "Update product",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ProductUpdate" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not Found" } }
+      },
+      "delete": {
+        "summary": "Delete product",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not Found" } }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "ProductCreate": {
+        "type": "object",
+        "required": ["title", "price", "quantity"],
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "number" },
+          "quantity": { "type": "integer" },
+          "is_active": { "type": "boolean" }
+        }
+      },
+      "ProductUpdate": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "number" },
+          "quantity": { "type": "integer" },
+          "is_active": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}
+
+

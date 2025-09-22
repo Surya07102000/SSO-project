@@ -1,0 +1,140 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Central App API", "version": "1.0.0" },
+  "servers": [{ "url": "http://localhost:3000" }],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "Register": {
+        "type": "object",
+        "required": ["first_name", "email", "password"],
+        "properties": {
+          "first_name": { "type": "string" },
+          "last_name": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "ChangePassword": {
+        "type": "object",
+        "required": ["current_password", "new_password", "confirm_password"],
+        "properties": {
+          "current_password": { "type": "string" },
+          "new_password": { "type": "string" },
+          "confirm_password": { "type": "string" }
+        }
+      },
+      "ForgotPassword": {
+        "type": "object",
+        "required": ["email"],
+        "properties": { "email": { "type": "string" } }
+      },
+      "ResetPassword": {
+        "type": "object",
+        "required": ["token", "new_password", "confirm_password"],
+        "properties": {
+          "token": { "type": "string" },
+          "new_password": { "type": "string" },
+          "confirm_password": { "type": "string" }
+        }
+      },
+      "RefreshToken": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": { "refreshToken": { "type": "string" } }
+      },
+      "Logout": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": { "type": "string" },
+          "accessToken": { "type": "string" }
+        }
+      },
+      "SsoLogin": {
+        "type": "object",
+        "required": ["application_id"],
+        "properties": { "application_id": { "type": "integer" } }
+      }
+    }
+  },
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "summary": "User login",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Login" } } } },
+        "responses": { "200": { "description": "OK" }, "401": { "description": "Unauthorized" } }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "summary": "Register user",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Register" } } } },
+        "responses": { "200": { "description": "OK" }, "409": { "description": "Conflict" } }
+      }
+    },
+    "/api/v1/auth/change-password": {
+      "post": {
+        "summary": "Change password",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ChangePassword" } } } },
+        "responses": { "200": { "description": "OK" }, "400": { "description": "Bad Request" } }
+      }
+    },
+    "/api/v1/auth/forgot-password": {
+      "post": {
+        "summary": "Forgot password",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ForgotPassword" } } } },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "summary": "Reset password",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ResetPassword" } } } },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/v1/auth/refresh-token": {
+      "post": {
+        "summary": "Refresh token",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RefreshToken" } } } },
+        "responses": { "200": { "description": "OK" }, "401": { "description": "Unauthorized" } }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "summary": "Logout",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Logout" } } } },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/v1/auth/logout-all": {
+      "post": {
+        "summary": "Logout from all devices",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/v1/auth/sso-login": {
+      "post": {
+        "summary": "SSO Login",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SsoLogin" } } } },
+        "responses": { "200": { "description": "OK" } }
+      }
+    }
+  }
+}
+
+

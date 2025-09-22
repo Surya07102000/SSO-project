@@ -1,0 +1,89 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Production builds
+build/
+dist/
+out/
+**/build/
+**/dist/
+**/out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Coverage
+coverage/
+**/coverage/
+.nyc_output/
+
+# Test outputs
+.junit/
+test-results/
+junit.xml
+
+# Caches
+.eslintcache
+.cache/
+.temp/
+.tmp/
+.parcel-cache/
+
+# Framework-specific
+.next/
+.nuxt/
+.svelte-kit/
+.storybook-out/
+.cypress/
+
+# TypeScript
+*.tsbuildinfo
+
+# Editors & IDEs
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.iml
+
+# OS / System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Databases / local storage
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Docker/local services
+docker-data/
+
+# Package managers
+package-lock.json
+**/package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Misc
+*.local
